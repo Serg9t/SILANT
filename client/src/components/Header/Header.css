@@ -59,7 +59,6 @@
 .header-title {
     width: 100%;
     font-size: 25px;
-    text-align: left;
     font-family: PT-Astra-Sans_Bold, sans-serif;
     color: var(--silant-blue);
     opacity: 0.8;
@@ -67,9 +66,6 @@
 
 @media (max-width: 900px) {
 
-    /* .header-container {
-        width: 1000px;
-    } */
 
     .logo {
         width: 50px;

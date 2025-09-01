@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api';
+import { useAuth } from '../../context/AuthContext';
 
 const MaintenanceTableInfo = () => {
+
+    const { setvisibleDetailInfoModal, setDetailInfo } = useAuth()
+
     const [data, setData] = useState([]);
     const [filters, setFilters] = useState({
         maintenanceType: '',
@@ -44,6 +48,14 @@ const MaintenanceTableInfo = () => {
             );
         });
     };
+
+
+    const redirectDetailInfo = (obj_model) => {
+        setDetailInfo(obj_model)
+
+        setvisibleDetailInfoModal(true)
+        console.log(obj_model)
+    }
 
     return (
         <>
@@ -94,7 +106,7 @@ const MaintenanceTableInfo = () => {
                     <tbody>
                         {applyFilters(data).map(item => (
                             <tr key={item.id}>
-                                <td>{item.serial_number_machine}</td>
+                                <td className="table-model" onClick={() => redirectDetailInfo({name: item.name, description: item.description})}>{item.serial_number_machine}</td>
                                 <td>{item.maintenance_type}</td>
                                 <td>{item.maintenance_date}</td>
                                 <td>{item.hours_worked}</td>

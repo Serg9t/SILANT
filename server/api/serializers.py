@@ -1,3 +1,4 @@
+from platform import machine
 from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
 
@@ -171,11 +172,15 @@ class MaintenanceSerializer(serializers.ModelSerializer):
     serial_number_machine = serializers.CharField(source='machine.serial_number_machine')
     maintenance_type = serializers.CharField(source='maintenance_type.name')
     service_company = serializers.CharField(source='service_company.name')
+    name = serializers.CharField(source='machine.machine_model.name')
+    description = serializers.CharField(source='machine.machine_model.description')
 
     class Meta:
         model = Maintenance
         fields = [
             'id',
+            'name',
+            'description',
             'serial_number_machine', 
             'maintenance_type', 
             'maintenance_date', 
@@ -190,6 +195,9 @@ class ComplaintSerializer(serializers.ModelSerializer):
     machine = serializers.CharField(source='machine.serial_number_machine', read_only=True)
     failure_point = serializers.CharField(source='failure_point.name', read_only=True)
     restoration_method = serializers.CharField(source='restoration_method.name', read_only=True)
+    name = serializers.CharField(source='machine.machine_model.name')
+    description = serializers.CharField(source='machine.machine_model.description')
+
     service_company = serializers.SerializerMethodField()
 
     def get_service_company(self, obj):
@@ -201,6 +209,8 @@ class ComplaintSerializer(serializers.ModelSerializer):
         model = Complaint
         fields = [
             "id",
+            'name',
+            'description',
             "machine",
             "date_refusal",
             "hours_worked",

@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api';
+import { useAuth } from '../../context/AuthContext';
 
 const ComplaintTableInfo = () => {
+
+    const { setvisibleDetailInfoModal, setDetailInfo } = useAuth();
+
     const [data, setData] = useState([]);
     const [filters, setFilters] = useState({
         failureNode: '',
@@ -44,6 +48,13 @@ const ComplaintTableInfo = () => {
             );
         });
     };
+
+    const redirectDetailInfo = (obj_model) => {
+        setDetailInfo(obj_model)
+
+        setvisibleDetailInfoModal(true)
+        console.log(obj_model)
+    }
 
     return (
         <>
@@ -97,7 +108,7 @@ const ComplaintTableInfo = () => {
                     <tbody>
                         {applyFilters(data).map(item => (
                             <tr key={item.id}>
-                                <td>{item.machine}</td>
+                                <td className="table-model" onClick={() => redirectDetailInfo({name: item.name, description: item.description})}>{item.machine}</td>
                                 <td>{item.date_refusal}</td>
                                 <td>{item.hours_worked}</td>
                                 <td>{item.failure_point}</td>
