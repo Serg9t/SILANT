@@ -11,13 +11,6 @@ from .permissions import MaintenancePermission, ComplaintPermission, ManagerPerm
 from .filters import MachineFilter
 
 
-class MachineBasicInfoFilter(filters.FilterSet):
-    serial_number = filters.CharFilter(field_name='serial_number_machine', lookup_expr='iexact')
-
-    class Meta:
-        model = Machine
-        fields = ['serial_number_machine']
-
 
 class StandartInfoViewSet(viewsets.ModelViewSet):
     queryset = Machine.objects.all()

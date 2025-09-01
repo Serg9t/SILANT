@@ -12,7 +12,6 @@ const ComplaintTableInfo = () => {
     const fetchData = async () => {
         try {
             const token = localStorage.getItem('accessToken');
-            console.log(token)
             const response = await api.get(`/api/complaint/`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
