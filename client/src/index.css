@@ -1,0 +1,61 @@
+:root {
+    --silant-blue: #163E6C;
+    --silant-red: #D20A11;
+    --silant-sandy: #EBE6D6;
+}
+
+@font-face {
+    font-family: 'PT-Astra-Sans_Regular';
+    src: url('./assets/fonts/PT-Astra-Sans_Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PT-Astra-Sans_Bold';
+    src: url('./assets/fonts/PT-Astra-Sans_Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PT-Astra-Sans_Italic';
+    src: url('./assets/fonts/PT-Astra-Sans_Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'PT-Astra-Sans_Bold-Italic';
+    src: url('./assets/fonts/PT-Astra-Sans_Bold-Italic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* body {
+    min-height: 100vh;
+    background-image: linear-gradient(to right, #549de5, #dbc293);
+} */
+
+main {
+    min-height: 100vh;
+    background-image: linear-gradient(to right, #549de5, #dbc293);
+}
+
+.container {
+    margin: 0 auto;
+    padding: 0 15px;
+    max-width: 1200px;
+}

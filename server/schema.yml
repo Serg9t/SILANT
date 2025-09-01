@@ -1,0 +1,547 @@
+openapi: 3.0.3
+info:
+  title: Your Project API
+  version: 1.0.0
+  description: Your project description
+paths:
+  /api/complaint/:
+    get:
+      operationId: api_complaint_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Complaint'
+          description: ''
+  /api/complaint/{id}/:
+    get:
+      operationId: api_complaint_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Complaint'
+          description: ''
+  /api/machines/:
+    get:
+      operationId: api_machines_list
+      parameters:
+      - in: query
+        name: serial_number
+        schema:
+          type: string
+      - in: query
+        name: serial_number_machine
+        schema:
+          type: string
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StandartMachineInfo'
+          description: ''
+  /api/machines/{id}/:
+    get:
+      operationId: api_machines_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandartMachineInfo'
+          description: ''
+  /api/machines/full_info/:
+    get:
+      operationId: api_machines_full_info_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FullInfoMachine'
+          description: ''
+  /api/machines/full_info/{id}/:
+    get:
+      operationId: api_machines_full_info_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullInfoMachine'
+          description: ''
+  /api/maintenance/:
+    get:
+      operationId: api_maintenance_list
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Maintenance'
+          description: ''
+  /api/maintenance/{id}/:
+    get:
+      operationId: api_maintenance_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Maintenance'
+          description: ''
+  /user/home/:
+    get:
+      operationId: user_home_retrieve
+      tags:
+      - user
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /user/login/:
+    post:
+      operationId: user_login_create
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+        required: true
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLogin'
+          description: ''
+  /user/logout/:
+    post:
+      operationId: user_logout_create
+      tags:
+      - user
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          description: No response body
+  /user/token/refresh/:
+    post:
+      operationId: user_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /user/user/:
+    get:
+      operationId: user_user_retrieve
+      tags:
+      - user
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomUser'
+          description: ''
+components:
+  schemas:
+    Complaint:
+      type: object
+      properties:
+        machine:
+          type: string
+          readOnly: true
+        date_refusal:
+          type: string
+          format: date
+        hours_worked:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+        failure_point:
+          type: string
+          readOnly: true
+        failure_description:
+          type: string
+        restoration_method:
+          type: string
+          readOnly: true
+        used_spare_parts:
+          type: string
+          nullable: true
+        restoration_date:
+          type: string
+          format: date
+        tech_downtime:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+      required:
+      - date_refusal
+      - failure_description
+      - failure_point
+      - hours_worked
+      - machine
+      - restoration_date
+      - restoration_method
+      - tech_downtime
+    CustomUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        company:
+          type: string
+          maxLength: 200
+      required:
+      - id
+      - username
+    DriveAxleMoel:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+          nullable: true
+      required:
+      - name
+    EngineModel:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+          nullable: true
+      required:
+      - name
+    FullInfoMachine:
+      type: object
+      properties:
+        serial_number_machine:
+          type: string
+          maxLength: 100
+        machine_model:
+          $ref: '#/components/schemas/MachineModel'
+        engine_model:
+          $ref: '#/components/schemas/EngineModel'
+        engine_serial_number:
+          type: string
+          maxLength: 100
+        transmission_model:
+          $ref: '#/components/schemas/TransmissionModel'
+        transmission_serial_number:
+          type: string
+          maxLength: 100
+        drive_axle_model:
+          $ref: '#/components/schemas/DriveAxleMoel'
+        drive_axle_serial_number:
+          type: string
+          maxLength: 100
+        steering_axle_model:
+          $ref: '#/components/schemas/SteeringAxleModel'
+        steering_axle_serial_number:
+          type: string
+          maxLength: 100
+        client:
+          type: string
+          readOnly: true
+        consumer:
+          type: string
+          readOnly: true
+        contract:
+          type: string
+          readOnly: true
+        shipment_date:
+          type: string
+          readOnly: true
+        delivery_address:
+          type: string
+          readOnly: true
+        options:
+          type: string
+          readOnly: true
+        service_company:
+          type: string
+          readOnly: true
+      required:
+      - client
+      - consumer
+      - contract
+      - delivery_address
+      - drive_axle_model
+      - drive_axle_serial_number
+      - engine_model
+      - engine_serial_number
+      - machine_model
+      - options
+      - serial_number_machine
+      - service_company
+      - shipment_date
+      - steering_axle_model
+      - steering_axle_serial_number
+      - transmission_model
+      - transmission_serial_number
+    MachineModel:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+          nullable: true
+      required:
+      - name
+    Maintenance:
+      type: object
+      properties:
+        serial_number_machine:
+          type: string
+        maintenance_type:
+          type: string
+        maintenance_date:
+          type: string
+          format: date
+        hours_worked:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+        order_number:
+          type: string
+          maxLength: 100
+        order_date:
+          type: string
+          format: date
+        service_company:
+          type: string
+      required:
+      - hours_worked
+      - maintenance_date
+      - maintenance_type
+      - order_date
+      - order_number
+      - serial_number_machine
+      - service_company
+    StandartMachineInfo:
+      type: object
+      properties:
+        serial_number_machine:
+          type: string
+          maxLength: 100
+        machine_model:
+          $ref: '#/components/schemas/MachineModel'
+        engine_model:
+          $ref: '#/components/schemas/EngineModel'
+        engine_serial_number:
+          type: string
+          maxLength: 100
+        transmission_model:
+          $ref: '#/components/schemas/TransmissionModel'
+        transmission_serial_number:
+          type: string
+          maxLength: 100
+        drive_axle_model:
+          $ref: '#/components/schemas/DriveAxleMoel'
+        drive_axle_serial_number:
+          type: string
+          maxLength: 100
+        steering_axle_model:
+          $ref: '#/components/schemas/SteeringAxleModel'
+        steering_axle_serial_number:
+          type: string
+          maxLength: 100
+      required:
+      - drive_axle_model
+      - drive_axle_serial_number
+      - engine_model
+      - engine_serial_number
+      - machine_model
+      - serial_number_machine
+      - steering_axle_model
+      - steering_axle_serial_number
+      - transmission_model
+      - transmission_serial_number
+    SteeringAxleModel:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+          nullable: true
+      required:
+      - name
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+      required:
+      - access
+      - refresh
+    TransmissionModel:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+          nullable: true
+      required:
+      - name
+    UserLogin:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - password
+      - username
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
